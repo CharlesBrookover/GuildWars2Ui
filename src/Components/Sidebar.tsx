@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {Dropdown, Nav, NavItem} from "react-bootstrap";
+import {Dropdown, Nav} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {solid} from "@fortawesome/fontawesome-svg-core/import.macro";
 
@@ -19,19 +19,19 @@ const Sidebar = () => {
                     </Nav.Link>
                 </Nav.Item>
                 <Nav.Item className="text-start">
-                    <Nav.Link href="/items"  className="text-white">
+                    <Nav.Link href="/items" className="text-white">
                         <FontAwesomeIcon icon={solid('database')} fixedWidth className="mx-3"/>
                         Item Database
                     </Nav.Link>
                 </Nav.Item>
                 <Nav.Item className="text-start">
-                    <Nav.Link href="/data"  className="text-white">
+                    <Nav.Link href="/data" className="text-white">
                         <FontAwesomeIcon icon={solid('chart-column')} fixedWidth className="mx-3"/>
                         Charts
                     </Nav.Link>
                 </Nav.Item>
             </Nav>
-            <hr />
+            <hr/>
             <Dropdown drop="up">
                 <Dropdown.Toggle id="sidebar_dropdown" variant="dark">
                     <FontAwesomeIcon icon={solid('circle-user')} fixedWidth size="2x" className="mx-3"/>
@@ -40,7 +40,7 @@ const Sidebar = () => {
 
                 <Dropdown.Menu>
                     <Dropdown.Item href="/apiKeys">Api Keys</Dropdown.Item>
-                    <Dropdown.Divider />
+                    <Dropdown.Divider/>
                     <Dropdown.Item href="/signOut">Sign Out</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
