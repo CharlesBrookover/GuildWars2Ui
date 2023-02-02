@@ -1,17 +1,18 @@
 import React, {ReactNode} from 'react';
-import {PageContextProvider} from "../Contexts/PageContext";
 import Container from "react-bootstrap/Container";
-import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Sidebar from "./Components/Sidebar";
 import {Stack} from "react-bootstrap";
-import Sidebar from "../Components/Sidebar";
-import Header from "../Components/Header";
+import Header from "./Components/Header";
+import {PageContextProvider} from "./Contexts/PageContext";
+import {Outlet} from "react-router-dom";
 
 type Props = {
-    children: NonNullable<ReactNode>
+    children?: NonNullable<ReactNode>
 };
 
-const Layout: React.FC<Props> = ({children}) => {
+const App: React.FC<Props> = ({children}) => {
     return (
         <PageContextProvider>
             <Container fluid>
@@ -21,6 +22,7 @@ const Layout: React.FC<Props> = ({children}) => {
                         <Stack>
                             <Header />
                             <main className="overflow-auto m-3">
+                                <Outlet />
                                 {children}
                             </main>
                         </Stack>
@@ -31,4 +33,4 @@ const Layout: React.FC<Props> = ({children}) => {
     );
 };
 
-export default Layout;
+export default App;
