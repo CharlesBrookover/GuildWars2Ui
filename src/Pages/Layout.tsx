@@ -20,7 +20,7 @@ const Layout: React.FC<Props> = ({children}) => {
                     <Col className="p-0">
                         <Stack>
                             <Header />
-                            <main className="overflow-auto">
+                            <main className="overflow-auto m-3">
                                 {children}
                             </main>
                         </Stack>
