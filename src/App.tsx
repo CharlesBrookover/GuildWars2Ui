@@ -3,16 +3,17 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Sidebar from "./Components/Sidebar";
-import {Stack} from "react-bootstrap";
+import {Alert, Stack} from "react-bootstrap";
 import Header from "./Components/Header";
 import {PageContextProvider} from "./Contexts/PageContext";
 import {Outlet} from "react-router-dom";
+import {ErrorBoundary} from "react-error-boundary";
 
-type Props = {
+type AppProps = {
     children?: NonNullable<ReactNode>
 };
 
-const App: React.FC<Props> = ({children}) => {
+const App = ({children}: AppProps) => {
     return (
         <PageContextProvider>
             <Container fluid>

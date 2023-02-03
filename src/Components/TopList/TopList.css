@@ -1,0 +1,6 @@
+.list-group  {
+    --bs-list-group-action-active-bg: var(--bs-body-bg);
+    --bs-list-group-action-active-color: var(--bs-body-color);
+    --bs-list-group-active-bg: var(--bs-body-bg);
+    --ba-list-group-active-color: var(--bs-body-color);
+}

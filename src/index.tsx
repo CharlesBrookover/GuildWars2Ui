@@ -19,9 +19,13 @@ const router = createBrowserRouter([
         element: <App/>,
         errorElement: <ErrorPage/>,
         children: [
-            {path: 'home', element: <Root/>},
+            {index: true, element: <Root/>},
             {path: 'settings', element: <Settings/>},
-            {path: 'database', element: <Database/>}
+            {path: 'database', element: <Database/>,
+                children: [
+                    {path: ':itemid'}
+                ]
+            }
         ]
     }
 ]);
