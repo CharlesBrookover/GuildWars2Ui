@@ -8,6 +8,7 @@ import Root from './Pages/Root';
 import Settings from "./Pages/Settings"
 import App from "./App";
 import Database from "./Pages/Database";
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement
@@ -21,7 +22,8 @@ const router = createBrowserRouter([
         children: [
             {index: true, element: <Root/>},
             {path: 'settings', element: <Settings/>},
-            {path: 'database', element: <Database/>,
+            {
+                path: 'database', element: <Database/>,
                 children: [
                     {path: ':itemid'}
                 ]
@@ -30,9 +32,13 @@ const router = createBrowserRouter([
     }
 ]);
 
+const queryClient = new QueryClient();
+
 root.render(
     <React.StrictMode>
-        <RouterProvider router={router}/>
+        <QueryClientProvider client={queryClient}>
+            <RouterProvider router={router}/>
+        </QueryClientProvider>
     </React.StrictMode>
 );
 
@@ -40,3 +46,5 @@ root.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+
