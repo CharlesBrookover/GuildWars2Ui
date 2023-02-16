@@ -1,11 +1,8 @@
 import React, {useState} from 'react';
 import DataCard from "../../../Components/DataCard";
-import {DailyAchievementItem, DailyAchievementsProps} from "../types";
+import {DailyAchievementsProps} from "../types";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
-import Image from "react-bootstrap/Image";
-import PathOfFire from "../../../Assets/GW2-PoF_Texture_Centered_Trans.png";
-import HeartOfThorns from "../../../Assets/GW2-HoT_Texture_Centered_Trans.png";
 import ApiQueryHook from "../../../Services/ApiQueryHook";
 import {ApiDailyAchievement} from '../../../Types/Api';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -21,20 +18,6 @@ const CardDailyAchievements = ({tomorrow}: DailyAchievementsProps) => {
 
     const useDailyAchievement = ApiQueryHook<ApiDailyAchievement>({endpoint});
     const {data, error, status, isFetching} = useDailyAchievement({variables: parameters});
-
-    const listItem = (item: DailyAchievementItem) => {
-
-        return <div className="d-flex align-items-center">
-            <div className="flex-grow-1">{item.name}</div>
-            <div className="mx-3" style={{width: '48px'}}>
-                {item.product && {
-                    'PathOfFire': <Image fluid src={PathOfFire} />,
-                    'HeartOfThorns': <Image fluid src={HeartOfThorns} />
-                }[item.product]}
-            </div>
-        </div>
-    };
-
 
     return (
         <>

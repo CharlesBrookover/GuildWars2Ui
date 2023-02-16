@@ -1,32 +1,18 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import DataListGroup from "../../../Components/DataListGroup";
-import {ApiAchievement, ApiDailyAchievementItem} from "../../../Types/Api";
 import ApiQueryHook from "../../../Services/ApiQueryHook";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {solid} from "@fortawesome/fontawesome-svg-core/import.macro";
 import Alert from "react-bootstrap/Alert";
-import {detectTanstackQueryImports} from "@tanstack/eslint-plugin-query/build/lib/utils/detect-react-query-imports";
 import Image from "react-bootstrap/Image";
 import PathOfFire from "../../../Assets/GW2-PoF_Texture_Centered_Trans.png";
 import HeartOfThorns from "../../../Assets/GW2-HoT_Texture_Centered_Trans.png";
-import {ListGroup, Popover} from 'react-bootstrap';
-
-interface CardDailyAchievementsListProps {
-    cardData: ApiDailyAchievementItem[]
-}
-
-interface DailyAchievementDataListItem {
-    id: number,
-    name: string,
-    description: string,
-    maxLevel: number,
-    minLevel: number,
-    requiredProduct: 'PathOfFire' | 'HeartOfThorns' | undefined,
-    noProduct: 'PathOfFire' | 'HeartOfThorns' | undefined,
-}
+import {ListGroup} from 'react-bootstrap';
+import {CardDailyAchievementDataListItem, CardDailyAchievementsListProps} from '../types';
+import {ApiAchievement} from "../../../Types/Api";
 
 const CardDailyAchievementList = ({cardData}: CardDailyAchievementsListProps) => {
-    const [listData, setListData] = useState<DailyAchievementDataListItem[]>([]);
+    const [listData, setListData] = useState<CardDailyAchievementDataListItem[]>([]);
 
     const endpoint = '/achievements';
 
@@ -42,7 +28,7 @@ const CardDailyAchievementList = ({cardData}: CardDailyAchievementsListProps) =>
 
     useEffect(() => {
         setListData(() => cardData.map(ditem => {
-            let newData: DailyAchievementDataListItem = {
+            let newData: CardDailyAchievementDataListItem = {
                 id: ditem.id,
                 maxLevel: ditem.level.max,
                 minLevel: ditem.level.min,
@@ -58,9 +44,9 @@ const CardDailyAchievementList = ({cardData}: CardDailyAchievementsListProps) =>
 
             return newData;
         }));
-    }, [data]);
+    }, [cardData, data]);
 
-    const listLayout = (item: DailyAchievementDataListItem) => {
+    const listLayout = (item: CardDailyAchievementDataListItem) => {
         let variant;
         if (item.maxLevel < 80) {
             variant = 'warning';
