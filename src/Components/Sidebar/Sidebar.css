@@ -1,9 +1,9 @@
-.nav-pills .nav-link {
+.nav-pills.sidebar .nav-link {
     --bs-nav-link-color: var(--bs-white);
     --bs-nav-link-hover-color: var(--bs-white);
 }
 
-.nav-pills .nav-link:hover {
+.nav-pills.sidebar .nav-link:hover {
     --bs-nav-link-hover-color: var(--bs-gray-400);
 }
 

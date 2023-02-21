@@ -9,6 +9,7 @@ import Settings from "./Pages/Settings"
 import App from "./App";
 import Database from "./Pages/Database";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import Bank from "./Pages/Bank";
 
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement
@@ -27,7 +28,8 @@ const router = createBrowserRouter([
                 children: [
                     {path: ':itemid'}
                 ]
-            }
+            },
+            {path: 'bank', element: <Bank /> }
         ]
     }
 ]);

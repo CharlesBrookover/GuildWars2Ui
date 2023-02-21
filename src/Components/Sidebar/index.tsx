@@ -18,11 +18,17 @@ const Sidebar = () => {
                 </div>
             </div>
             <hr/>
-            <Nav className="flex-column mb-auto" defaultActiveKey="/" variant="pills" justify>
+            <Nav className="flex-column mb-auto sidebar" defaultActiveKey="/" variant="pills" justify>
                 <Nav.Item className="text-start">
                     <Nav.Link as={Link} to={'/'}>
                         <FontAwesomeIcon icon={solid('house')} fixedWidth className="mx-3"/>
                         <span>Home</span>
+                    </Nav.Link>
+                </Nav.Item>
+                <Nav.Item className="text-start">
+                    <Nav.Link as={Link} to={'/bank'}>
+                        <FontAwesomeIcon icon={solid('building-columns')} fixedWidth className="mx-3"/>
+                        <span>Bank</span>
                     </Nav.Link>
                 </Nav.Item>
                 <Nav.Item className="text-start">
@@ -39,7 +45,7 @@ const Sidebar = () => {
                 </Nav.Item>
             </Nav>
             <hr/>
-            <Nav className="flex-column" variant="pills" justify>
+            <Nav className="flex-column sidebar" variant="pills" justify>
                 <Nav.Item className="text-start">
                     <Nav.Link as={Link} to={'settings'}>
                         <FontAwesomeIcon icon={solid('cog')} fixedWidth className="mx-3"/>
