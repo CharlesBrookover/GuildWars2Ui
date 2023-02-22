@@ -7,7 +7,6 @@ interface ApiQueryHookProps  {
 }
 
 interface ApiQueryVariables {
-    endpoint: string,
     parameters?: {
         [key: string]: string | number
     },
@@ -20,7 +19,7 @@ const ApiQueryHook = <ApiData,>({endpoint, axiosConfig}: ApiQueryHookProps) => {
     return createQuery<ApiData, ApiQueryVariables, Error>(endpoint, ({queryKey: [primaryKey, variables]}) => {
         const config = {...baseConfig, ...axiosConfig,  params: {...variables.parameters}};
         return axios
-            .get(variables.endpoint, config)
+            .get(endpoint, config)
             .then(response => response.data);
     });
 };

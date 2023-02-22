@@ -3,6 +3,8 @@ import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import CardDailyAchievements from "./Components/CardDailyAchievements";
+import {ErrorBoundary} from "react-error-boundary";
+import ErrorFallback from "../../Components/ErrorFallback";
 
 
 const Root = () => {
@@ -10,10 +12,14 @@ const Root = () => {
         <Container>
             <Row>
                 <Col>
-                    <CardDailyAchievements/>
+                    <ErrorBoundary FallbackComponent={ErrorFallback}>
+                        <CardDailyAchievements />
+                    </ErrorBoundary>
                 </Col>
                 <Col>
-                    <CardDailyAchievements tomorrow/>
+                    <ErrorBoundary  FallbackComponent={ErrorFallback}>
+                        <CardDailyAchievements tomorrow />
+                    </ErrorBoundary>
                 </Col>
             </Row>
         </Container>

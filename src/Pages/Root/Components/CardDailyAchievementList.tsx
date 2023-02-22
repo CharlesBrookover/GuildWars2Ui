@@ -9,7 +9,7 @@ import PathOfFire from "../../../Assets/GW2-PoF_Texture_Centered_Trans.png";
 import HeartOfThorns from "../../../Assets/GW2-HoT_Texture_Centered_Trans.png";
 import {ListGroup} from 'react-bootstrap';
 import {CardDailyAchievementDataListItem, CardDailyAchievementsListProps} from '../types';
-import {ApiAchievement} from "../../../Types/Api";
+import {ApiAchievement} from "../../../Types/Api/Achievements";
 
 const CardDailyAchievementList = ({cardData}: CardDailyAchievementsListProps) => {
     const [listData, setListData] = useState<CardDailyAchievementDataListItem[]>([]);
@@ -19,7 +19,6 @@ const CardDailyAchievementList = ({cardData}: CardDailyAchievementsListProps) =>
     const useAchievement = ApiQueryHook<ApiAchievement[]>({endpoint});
     const {data, error, status} = useAchievement({
         variables: {
-            endpoint,
             parameters: {
                 ids: cardData ? cardData.map(item => item.id).join(',') : ''
             }
@@ -54,7 +53,7 @@ const CardDailyAchievementList = ({cardData}: CardDailyAchievementsListProps) =>
             variant = 'secondary';
         }
 
-        return <ListGroup.Item variant={variant ?? undefined} key={item.id}>
+        return <ListGroup.Item variant={variant ?? undefined} key={`${item.id}-${item.minLevel}-${item.maxLevel}`}>
             <div className="d-flex align-items-center">
                 <div className="flex-grow-1">{item.name}</div>
                 <div className="mx-3" style={{width: '48px'}}>

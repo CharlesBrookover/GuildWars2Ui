@@ -1,4 +1,4 @@
-import {ApiDailyAchievementItem} from "../../Types/Api";
+import {ApiDailyAchievementItem} from "../../Types/Api/Achievements";
 
 export interface DailyAchievementsProps {
     tomorrow?: true

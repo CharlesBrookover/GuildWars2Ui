@@ -4,7 +4,7 @@ import {DailyAchievementsProps} from "../types";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 import ApiQueryHook from "../../../Services/ApiQueryHook";
-import {ApiDailyAchievement} from '../../../Types/Api';
+import {ApiDailyAchievement} from '../../../Types/Api/Achievements';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {solid} from "@fortawesome/fontawesome-svg-core/import.macro";
 import CardDailyAchievementList from "./CardDailyAchievementList";
@@ -14,7 +14,7 @@ const CardDailyAchievements = ({tomorrow}: DailyAchievementsProps) => {
     const [activeTab, setActiveTab] = useState<string>(defaultTab);
 
     const endpoint = `/achievements/daily${tomorrow ? '/tomorrow' : ''}`;
-    const parameters = {endpoint: endpoint, parameters: {v: 'latest'}};
+    const parameters = { parameters: {v: 'latest'}};
 
     const useDailyAchievement = ApiQueryHook<ApiDailyAchievement>({endpoint});
     const {data, error, status, isFetching} = useDailyAchievement({variables: parameters});
