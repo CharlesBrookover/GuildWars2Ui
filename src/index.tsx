@@ -8,8 +8,10 @@ import Root from './Pages/Root';
 import Settings from "./Pages/Settings"
 import App from "./App";
 import Database from "./Pages/Database";
-import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import {QueryClient} from "@tanstack/react-query";
 import Bank from "./Pages/Bank";
+import {createSyncStoragePersister} from "@tanstack/query-sync-storage-persister";
+import {PersistQueryClientProvider} from "@tanstack/react-query-persist-client";
 
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement
@@ -18,29 +20,40 @@ const root = ReactDOM.createRoot(
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <App/>,
-        errorElement: <ErrorPage/>,
+        element: <App />,
+        errorElement: <ErrorPage />,
         children: [
-            {index: true, element: <Root/>},
-            {path: 'settings', element: <Settings/>},
+            {index: true, element: <Root />},
+            {path: 'settings', element: <Settings />},
             {
-                path: 'database', element: <Database/>,
+                path: 'database', element: <Database />,
                 children: [
                     {path: ':itemid'}
                 ]
             },
-            {path: 'bank', element: <Bank /> }
+            {path: 'bank', element: <Bank />}
         ]
     }
 ]);
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            cacheTime: 1000 * 60 * 60 * 24 // 24 hours
+        }
+    }
+});
+
+const localstoragePersister = createSyncStoragePersister({
+    storage: window.localStorage,
+    key: 'GW2_REACT_QUERY'
+});
 
 root.render(
     <React.StrictMode>
-        <QueryClientProvider client={queryClient}>
-            <RouterProvider router={router}/>
-        </QueryClientProvider>
+        <PersistQueryClientProvider client={queryClient} persistOptions={{persister: localstoragePersister}}>
+            <RouterProvider router={router} />
+        </PersistQueryClientProvider>
     </React.StrictMode>
 );
 

@@ -8,6 +8,9 @@ import {ApiDailyAchievement} from '../../../Types/Api/Achievements';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {solid} from "@fortawesome/fontawesome-svg-core/import.macro";
 import CardDailyAchievementList from "./CardDailyAchievementList";
+import {msTillReset} from "../../../Services/Dates";
+import {persistQueryClient} from "@tanstack/react-query-persist-client";
+import {useQuery, useQueryClient} from "@tanstack/react-query";
 
 const defaultTab = 'pve';
 const CardDailyAchievements = ({tomorrow}: DailyAchievementsProps) => {
@@ -16,8 +19,13 @@ const CardDailyAchievements = ({tomorrow}: DailyAchievementsProps) => {
     const endpoint = `/achievements/daily${tomorrow ? '/tomorrow' : ''}`;
     const parameters = { parameters: {v: 'latest'}};
 
+    console.log('Server Reset: %d', msTillReset());
+
     const useDailyAchievement = ApiQueryHook<ApiDailyAchievement>({endpoint});
-    const {data, error, status, isFetching} = useDailyAchievement({variables: parameters});
+    const {data, error, status, isFetching} = useDailyAchievement({
+        variables: parameters,
+        staleTime: msTillReset()
+    });
 
     return (
         <>
