@@ -1,45 +1,46 @@
-import React, {useEffect, useState} from 'react';
-import DataListGroup from "../../../Components/DataListGroup";
-import ApiQueryHook from "../../../Services/ApiQueryHook";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {solid} from "@fortawesome/fontawesome-svg-core/import.macro";
-import Alert from "react-bootstrap/Alert";
-import Image from "react-bootstrap/Image";
-import PathOfFire from "../../../Assets/GW2-PoF_Texture_Centered_Trans.png";
-import HeartOfThorns from "../../../Assets/GW2-HoT_Texture_Centered_Trans.png";
-import {ListGroup} from 'react-bootstrap';
+import {solid}                                                            from "@fortawesome/fontawesome-svg-core/import.macro";
+import {FontAwesomeIcon}                                                  from "@fortawesome/react-fontawesome";
+import {useQuery}                                                         from '@tanstack/react-query';
+import axios                                                              from 'axios';
+import React, {useEffect, useState}                                       from 'react';
+import {ListGroup}                                                        from 'react-bootstrap';
+import Alert                                                              from "react-bootstrap/Alert";
+import Image                                                              from "react-bootstrap/Image";
+import HeartOfThorns                                                      from "../../../Assets/GW2-HoT_Texture_Centered_Trans.png";
+import PathOfFire                                                         from "../../../Assets/GW2-PoF_Texture_Centered_Trans.png";
+import DataListGroup                                                      from "../../../Components/DataListGroup";
+import {msTillReset}                                                      from '../../../Services/Dates';
+import {apiQueryFn}                                                       from '../../../Services/Queries';
+import {ApiAchievement, ApiDailyAchievement}                              from "../../../Types/Api/Achievements";
 import {CardDailyAchievementDataListItem, CardDailyAchievementsListProps} from '../types';
-import {ApiAchievement} from "../../../Types/Api/Achievements";
 
 const CardDailyAchievementList = ({cardData}: CardDailyAchievementsListProps) => {
     const [listData, setListData] = useState<CardDailyAchievementDataListItem[]>([]);
 
     const endpoint = '/achievements';
+    const axiosConfig = {params: {ids: cardData ? cardData.map(item => item.id).join(',') : ''}};
 
-    const useAchievement = ApiQueryHook<ApiAchievement[]>({endpoint});
-    const {data, error, status} = useAchievement({
-        variables: {
-            parameters: {
-                ids: cardData ? cardData.map(item => item.id).join(',') : ''
-            }
+    const {data, error, status} = useQuery<ApiAchievement[], Error>(
+        {
+            queryKey:  [endpoint, {axiosConfig}],
+            queryFn:   () => apiQueryFn<ApiAchievement[]>({endpoint, axiosConfig}),
+            staleTime: msTillReset()
         }
-    });
+    );
 
     useEffect(() => {
-        setListData(() => cardData.map(ditem => {
-            let newData: CardDailyAchievementDataListItem = {
-                id: ditem.id,
-                maxLevel: ditem.level.max,
-                minLevel: ditem.level.min,
-                description: '',
-                name: '',
-                requiredProduct: ditem.required_access && ditem.required_access.condition === 'HasAccess' ? ditem.required_access.product : undefined,
-                noProduct: ditem.required_access && ditem.required_access.condition === 'NoAccess' ? ditem.required_access.product : undefined
-            };
+        setListData(() => cardData.map(listItem => {
+            const achievement: ApiAchievement | undefined = data?.find(item => listItem.id === item.id);
 
-            const achievement: ApiAchievement | undefined = data?.find(item => item.id === ditem.id);
-            newData.name = achievement ? achievement.name : 'Unknown';
-            newData.description = achievement ? achievement.description : 'Unknown';
+            const newData: CardDailyAchievementDataListItem = {
+                id:              listItem.id,
+                maxLevel:        listItem.level.max,
+                minLevel:        listItem.level.min,
+                description:     achievement ? achievement.description : 'Unknown',
+                name:            achievement ? achievement.name : 'Unknown',
+                requiredProduct: listItem.required_access && listItem.required_access.condition === 'HasAccess' ? listItem.required_access.product : undefined,
+                noProduct:       listItem.required_access && listItem.required_access.condition === 'NoAccess' ? listItem.required_access.product : undefined
+            };
 
             return newData;
         }));
@@ -58,8 +59,8 @@ const CardDailyAchievementList = ({cardData}: CardDailyAchievementsListProps) =>
                 <div className="flex-grow-1">{item.name}</div>
                 <div className="mx-3" style={{width: '48px'}}>
                     {item.requiredProduct && {
-                        'PathOfFire': <Image fluid src={PathOfFire} />,
-                        'HeartOfThorns': <Image fluid src={HeartOfThorns} />
+                        'PathOfFire':    <Image fluid src={PathOfFire}/>,
+                        'HeartOfThorns': <Image fluid src={HeartOfThorns}/>
                     }[item.requiredProduct]}
                 </div>
                 <div className="d-flex ">
@@ -73,11 +74,11 @@ const CardDailyAchievementList = ({cardData}: CardDailyAchievementsListProps) =>
     return (
         <>
             {status === 'loading'
-                ? <FontAwesomeIcon icon={solid('cogs')} spin />
-                : (error
-                        ? <Alert variant="danger">{error?.message}</Alert>
-                        : <DataListGroup data={listData} renderItem={listLayout} />
-                )
+             ? <FontAwesomeIcon icon={solid('cogs')} spin/>
+             : (error
+                ? <Alert variant="danger">{error?.message}</Alert>
+                : <DataListGroup data={listData} renderItem={listLayout}/>
+             )
             }
         </>
     );

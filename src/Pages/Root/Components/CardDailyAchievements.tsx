@@ -26,7 +26,8 @@ const CardDailyAchievements = ({tomorrow}: DailyAchievementsProps) => {
                 return apiQueryFn<ApiDailyAchievement>({endpoint, axiosConfig})
             },
             staleTime: msTillReset()
-        });
+        }
+    );
 
     return (
         <>
