@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {useParams} from "react-router-dom";
 import {createColumnHelper, flexRender, getCoreRowModel, useReactTable} from "@tanstack/react-table";
-import {DatabaseItems} from "./types";
-import {DatabaseItemData} from "../../data/testData";
-import Image from 'react-bootstrap/Image';
+import {DatabaseItems}    from "./types";
+import {DatabaseItemData} from "../../_data/testData";
+import Image              from 'react-bootstrap/Image';
 import {Table} from "react-bootstrap";
 
 const columnHelper = createColumnHelper<DatabaseItems>();

@@ -1,20 +1,25 @@
-import React from 'react';
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Sidebar from "./Components/Sidebar";
-import Stack from "react-bootstrap/Stack";
-import Header from "./Components/Header";
-import {PageContextProvider} from "./Contexts/PageContext";
-import {Outlet} from "react-router-dom";
-import {PropsChildren} from "./types";
-import {ErrorBoundary, FallbackProps} from "react-error-boundary";
-import ErrorFallback from "./Components/ErrorFallback";
-import AlertMessage from "./Components/AlertMessage";
+import React                                  from 'react';
+import Container                              from "react-bootstrap/Container";
+import Row                                    from "react-bootstrap/Row";
+import Col                                    from "react-bootstrap/Col";
+import {userData}                             from './_data/userData';
+import Sidebar                                from "./Components/Sidebar";
+import Stack                                  from "react-bootstrap/Stack";
+import Header                                 from "./Components/Header";
+import {PageContextProvider, PageContextType} from "./Contexts/PageContext";
+import {Outlet}                               from "react-router-dom";
+import {PropsChildren}                        from "./types";
+import {ErrorBoundary, FallbackProps}         from "react-error-boundary";
+import ErrorFallback                          from "./Components/ErrorFallback";
+import AlertMessage                           from "./Components/AlertMessage";
+
+const contextData: PageContextType = {
+    user: userData
+}
 
 const App = ({children}: PropsChildren) => {
     return (
-        <PageContextProvider>
+        <PageContextProvider contextData={contextData}>
             <ErrorBoundary fallbackRender={({error}: FallbackProps) => (
                 <AlertMessage message={`Something Catastrophic Happened! ${error}`} type="danger" />
             )}>

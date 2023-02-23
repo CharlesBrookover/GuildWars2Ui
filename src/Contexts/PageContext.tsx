@@ -1,16 +1,13 @@
 import React, {createContext, useContext} from 'react';
-import {userData, UserType} from "../data/userData";
+import {UserType}                         from "../_data/userData";
 
-type PageContextType = {
+export interface PageContextType {
     user?: UserType
-};
+}
 
-type PageContextProviderProps = {
-    children: React.ReactNode
-};
-
-const contextData = {
-    user: userData
+interface PageContextProviderProps {
+    children: React.ReactNode,
+    contextData: PageContextType
 }
 
 const PageContext = createContext<PageContextType | undefined>(undefined);
@@ -24,7 +21,7 @@ const usePageContext = () => {
     return context;
 };
 
-const PageContextProvider = ({children}:PageContextProviderProps) => {
+const PageContextProvider = ({children, contextData}: PageContextProviderProps) => {
     return (<PageContext.Provider value={contextData}>{children}</PageContext.Provider>);
 };
 
