@@ -1,7 +1,5 @@
 import {solid}                                                            from "@fortawesome/fontawesome-svg-core/import.macro";
 import {FontAwesomeIcon}                                                  from "@fortawesome/react-fontawesome";
-import {useQuery}                                                         from '@tanstack/react-query';
-import axios                                                              from 'axios';
 import React, {useEffect, useState}                                       from 'react';
 import {ListGroup}                                                        from 'react-bootstrap';
 import Alert                                                              from "react-bootstrap/Alert";
@@ -9,28 +7,22 @@ import Image                                                              from "
 import HeartOfThorns                                                      from "../../../Assets/GW2-HoT_Texture_Centered_Trans.png";
 import PathOfFire                                                         from "../../../Assets/GW2-PoF_Texture_Centered_Trans.png";
 import DataListGroup                                                      from "../../../Components/DataListGroup";
-import {msTillReset}                                                      from '../../../Services/Dates';
-import {apiQueryFn}                                                       from '../../../Services/Queries';
-import {ApiAchievement, ApiDailyAchievement}                              from "../../../Types/Api/Achievements";
+import useApiQueries                                                      from '../../../Hooks/useApiQueries';
+import {ApiAchievement}                                                   from "../../../Types/Api/Achievements";
 import {CardDailyAchievementDataListItem, CardDailyAchievementsListProps} from '../types';
 
 const CardDailyAchievementList = ({cardData}: CardDailyAchievementsListProps) => {
     const [listData, setListData] = useState<CardDailyAchievementDataListItem[]>([]);
 
-    const endpoint = '/achievements';
-    const axiosConfig = {params: {ids: cardData ? cardData.map(item => item.id).join(',') : ''}};
-
-    const {data, error, status} = useQuery<ApiAchievement[], Error>(
+    const {data, error, status} = useApiQueries<ApiAchievement[]>(
         {
-            queryKey:  [endpoint, {axiosConfig}],
-            queryFn:   () => apiQueryFn<ApiAchievement[]>({endpoint, axiosConfig}),
-            staleTime: msTillReset()
-        }
-    );
+            endpoint:   '/achievements',
+            parameters: {ids: cardData.map(item => item.id).join(',')}
+        });
 
     useEffect(() => {
         setListData(() => cardData.map(listItem => {
-            const achievement: ApiAchievement | undefined = data?.find(item => listItem.id === item.id);
+            const achievement: ApiAchievement | null | undefined = data?.find(item => listItem.id === item.id);
 
             const newData: CardDailyAchievementDataListItem = {
                 id:              listItem.id,

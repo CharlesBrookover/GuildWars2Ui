@@ -1,13 +1,10 @@
 import {solid}                  from "@fortawesome/fontawesome-svg-core/import.macro";
 import {FontAwesomeIcon}        from "@fortawesome/react-fontawesome";
-import {useQuery}               from "@tanstack/react-query";
-import {AxiosRequestConfig}     from 'axios';
 import React, {useState}        from 'react';
 import Tab                      from "react-bootstrap/Tab";
 import Tabs                     from "react-bootstrap/Tabs";
 import DataCard                 from "../../../Components/DataCard";
-import {msTillReset}            from '../../../Services/Dates';
-import {apiQueryFn}             from '../../../Services/Queries';
+import useApiQueries            from '../../../Hooks/useApiQueries';
 import {ApiDailyAchievement}    from '../../../Types/Api/Achievements';
 import {DailyAchievementsProps} from "../types";
 import CardDailyAchievementList from "./CardDailyAchievementList";
@@ -16,16 +13,10 @@ const defaultTab = 'pve';
 const CardDailyAchievements = ({tomorrow}: DailyAchievementsProps) => {
     const [activeTab, setActiveTab] = useState<string>(defaultTab);
 
-    const endpoint = `/achievements/daily${tomorrow ? '/tomorrow' : ''}`;
-    const axiosConfig: AxiosRequestConfig = {params: {v: 'latest'}};
-
-    const {data, error, status, isFetching} = useQuery<ApiDailyAchievement, Error>(
+    const {data, error, status, isFetching} = useApiQueries<ApiDailyAchievement>(
         {
-            queryKey:  [endpoint, {axiosConfig}],
-            queryFn:   () => {
-                return apiQueryFn<ApiDailyAchievement>({endpoint, axiosConfig})
-            },
-            staleTime: msTillReset()
+            endpoint:   `/achievements/daily${tomorrow ? '/tomorrow' : ''}`,
+            parameters: {v: 'latest'}
         }
     );
 

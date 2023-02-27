@@ -10,16 +10,12 @@ import Currency from "../../../Components/Currency";
 const columnHelper = createColumnHelper<WalletTable>();
 
 const columns = [
-    columnHelper.accessor('icon', {
-        cell: info => <div style={{width: "32px"}}><Image src={info.getValue()} fluid /></div>,
-        header: undefined
-    }),
     columnHelper.accessor('name', {
         cell: info => info.getValue(),
         header: 'Currency'
     }),
     columnHelper.accessor('total', {
-        cell: info => <div className="text-end"><Currency value={info.getValue()} name={info.row.original.name} />
+        cell: info => <div className="text-end"><Currency value={info.getValue()} name={info.row.original.name} icon={info.row.original.icon} />
         </div>,
         header: 'Total'
     })

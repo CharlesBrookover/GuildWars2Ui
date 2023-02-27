@@ -1,7 +1,7 @@
 /*
     Guild Wars 2 API Types
  */
-// ENDPOINT: /achievement/daily && /achivement/daily/tomorrow
+// ENDPOINT: /achievement/daily && /achievement/daily/tomorrow
 export type ApiDailyAchievement = {
     [key in 'pve' | 'pvp' | 'wvw' | 'fractals' | 'special']: ApiDailyAchievementItem[];
 };
