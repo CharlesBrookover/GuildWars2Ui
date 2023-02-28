@@ -5,7 +5,15 @@ import {ApiCurrencies, ApiWallet} from "../../../Types/Api/Bank";
 import {WalletTable}              from "../types";
 
 const oldDungeonCurrencies = [5, 6, 9, 10, 11, 12, 13, 14,];
-
+/*
+    Wallet groups
+    General - Gems, Coins, Karma, Spirit Shards, Laurels, Transmutation, Guild
+    Competitive - Honor, Pvp,shards of GLory, WvW, Heroics (all)
+    Map - Geiodes, Crests, parts, aurillium, crystals, provisioner tokens, unbound, contracts, mosiacs, volatile, festival tokens, magnetit shards, legendary insights, racing, prophet shards, seals
+     Keys - lockpicks, keys, crowbards, acid, machetes, blue prophet crystals
+    Dungeon - Dungeon, relics, unstable essences
+    Black lion - Gems, transmutation
+ */
 const useGetWallet = () => {
     const [combined, setCombined] = useState<WalletTable[]>([]);
     const context = usePageContext();

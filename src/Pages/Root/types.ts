@@ -22,3 +22,25 @@ export interface CardDailyAchievementDataListItem {
     requiredProduct: 'PathOfFire' | 'HeartOfThorns' | undefined,
     noProduct: 'PathOfFire' | 'HeartOfThorns' | undefined,
 }
+
+
+export interface ApiQueriesProps extends ApiAxiosConfig {
+    endpoint: string,
+    queryConfig?: {
+        staleTime?: number,
+        useErrorBoundary?: boolean
+    }
+
+}
+
+export interface ApiQueryFnProps extends Omit<ApiQueriesProps, 'queryConfig'> {
+}
+
+export interface ApiAxiosConfig {
+    parameters?: {
+        [key: string]: string | number
+    },
+    headers?: {
+        [key: string]: string | number
+    },
+}

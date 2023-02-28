@@ -1,40 +1,30 @@
-import {useQuery}           from '@tanstack/react-query';
-import {AxiosRequestConfig} from 'axios';
-import axios                from 'axios/index';
-import {msTillReset}        from '../Services/Dates';
+import {useQuery}        from '@tanstack/react-query';
+import axios                              from 'axios';
+import {ApiQueriesProps, ApiQueryFnProps} from '../Pages/Root/types';
+import {msTillReset}                      from '../Services/Dates';
 
-interface ApiQueriesProps {
-    endpoint: string,
-    parameters?: {
-        [key: string]: string | number
-    },
-    config?: AxiosRequestConfig
-}
+const useApiQueries = <ApiData, >({endpoint, parameters, headers, queryConfig}: ApiQueriesProps) => {
 
-interface ApiQueryFnProps {
-    endpoint: string,
-    axiosConfig?: AxiosRequestConfig
-}
-
-const useApiQueries = <ApiData, >({endpoint, parameters, config}: ApiQueriesProps) => {
-
-    const axiosConfig = {...config, params: {...parameters}};
-
-    function apiQueryFn<ApiData>({endpoint, axiosConfig}: ApiQueryFnProps): Promise<ApiData> {
-        const config = {baseURL: 'https://api.guildwars2.com/v2', ...axiosConfig}
+    function apiQueryFn<ApiData>({endpoint, headers, parameters}: ApiQueryFnProps): Promise<ApiData> {
+        const config = {baseURL: 'https://api.guildwars2.com/v2', headers: {...headers}, params: {...parameters}}
         return axios.get(endpoint, config).then(response => response.data);
     }
 
-    const out = useQuery<ApiData, Error>(
+    const {data, error, status, isLoading, isFetching} = useQuery<ApiData, Error>(
         {
-            queryKey:  [endpoint, {...axiosConfig}],
-            queryFn:   () => apiQueryFn<ApiData>({endpoint, axiosConfig}),
-            staleTime: msTillReset()
+            queryKey:         [endpoint, {...headers, ...parameters}],
+            queryFn:          () => apiQueryFn<ApiData>({endpoint, headers, parameters}),
+            staleTime:        msTillReset(),
+            useErrorBoundary: true,
+            ...queryConfig
         }
     );
-    return {
-        data: out.data, error: out.error, status: out.status, isLoading: out.isLoading, isFetching: out.isFetching
-    };
+
+    if (error != null) {
+        console.log(JSON.stringify(error));
+    }
+
+    return {data, error, status, isLoading, isFetching};
 };
 
 
