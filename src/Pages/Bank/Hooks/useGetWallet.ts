@@ -1,6 +1,7 @@
 import {useEffect, useState}      from 'react';
 import {usePageContext}           from "../../../Contexts/PageContext";
 import useApiQueries              from '../../../Hooks/useApiQueries';
+import {DurationInMs}             from '../../../Services/Dates';
 import {ApiCurrencies, ApiWallet} from "../../../Types/Api/Bank";
 import {WalletTable}              from "../types";
 
@@ -20,17 +21,15 @@ const useGetWallet = () => {
 
     const {data: currencies, status: currencyStatus} = useApiQueries<ApiCurrencies[]>(
         {
-            endpoint: '/currencies', parameters: {ids: 'all'}
+            endpoint: '/currencies', parameters: {ids: 'all'}, queryConfig: {staleTime: DurationInMs({days: 7})}
         });
-    const {
-              data:   wallet,
-              status: walletStatus
-          } = useApiQueries<ApiWallet[]>(
+    const {data: wallet, status: walletStatus} = useApiQueries<ApiWallet[]>(
         {
             endpoint:   '/account/wallet',
             parameters: {
                 access_token: context.user?.apiKey || ''
-            }
+            },
+            queryConfig: {staleTime: DurationInMs({minutes: 5})}
         });
 
     useEffect(() => {
