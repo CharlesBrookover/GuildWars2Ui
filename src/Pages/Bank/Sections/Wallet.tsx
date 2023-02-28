@@ -15,7 +15,7 @@ const columns = [
         header: 'Currency'
     }),
     columnHelper.accessor('total', {
-        cell: info => <div className="text-end"><Currency value={info.getValue()} name={info.row.original.name} icon={info.row.original.icon} />
+        cell: info => <div className="d-flex justify-content-end"><Currency value={info.getValue()} name={info.row.original.name}  />
         </div>,
         header: 'Total'
     })

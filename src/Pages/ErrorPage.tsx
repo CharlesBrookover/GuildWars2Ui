@@ -1,6 +1,6 @@
 import React from 'react';
 import {useRouteError} from 'react-router-dom';
-import App from "../App";
+import App             from "./Layout/App";
 
 const ErrorPage = () => {
 

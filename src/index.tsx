@@ -4,7 +4,7 @@ import {PersistQueryClientProvider}          from "@tanstack/react-query-persist
 import React                                 from "react";
 import ReactDOM                              from "react-dom/client";
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
-import App                                   from "./App";
+import App                                   from "./Pages/Layout/App";
 import "./index.css";
 import Bank                                  from "./Pages/Bank";
 import Database                              from "./Pages/Database";

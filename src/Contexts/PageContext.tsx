@@ -1,14 +1,6 @@
-import React, {createContext, useContext} from 'react';
-import {UserType}                         from "../_data/userData";
+import React, {createContext, useContext}          from 'react';
+import {PageContextProviderProps, PageContextType} from './types';
 
-export interface PageContextType {
-    user?: UserType
-}
-
-interface PageContextProviderProps {
-    children: React.ReactNode,
-    contextData: PageContextType
-}
 
 const PageContext = createContext<PageContextType | undefined>(undefined);
 
@@ -25,4 +17,13 @@ const PageContextProvider = ({children, contextData}: PageContextProviderProps) 
     return (<PageContext.Provider value={contextData}>{children}</PageContext.Provider>);
 };
 
-export {PageContextProvider, usePageContext};
+const PageContextReducer = (state: any, action: any) => {
+    switch (action.type) {
+        case 'UPDATE_ICONS':
+            return {...state, icons: {...action.icons}};
+        default:
+            throw new Error('Undefined Action');
+    }
+}
+
+export {PageContextProvider, usePageContext, PageContextReducer};
