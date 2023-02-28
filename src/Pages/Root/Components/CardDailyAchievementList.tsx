@@ -7,6 +7,7 @@ import Image                                                              from "
 import HeartOfThorns                                                      from "../../../Assets/GW2-HoT_Texture_Centered_Trans.png";
 import PathOfFire                                                         from "../../../Assets/GW2-PoF_Texture_Centered_Trans.png";
 import DataListGroup                                                      from "../../../Components/DataListGroup";
+import LoadingIcon                                                        from '../../../Components/LoadingIcon';
 import useApiQueries                                                      from '../../../Hooks/useApiQueries';
 import {ApiAchievement}                                                   from "../../../Types/Api/Achievements";
 import {CardDailyAchievementDataListItem, CardDailyAchievementsListProps} from '../types';
@@ -66,7 +67,7 @@ const CardDailyAchievementList = ({cardData}: CardDailyAchievementsListProps) =>
     return (
         <>
             {status === 'loading'
-             ? <FontAwesomeIcon icon={solid('cogs')} spin/>
+             ? <LoadingIcon />
              : (error
                 ? <Alert variant="danger">{error?.message}</Alert>
                 : <DataListGroup data={listData} renderItem={listLayout}/>
