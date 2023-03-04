@@ -1,44 +1,31 @@
 import React, {useState} from 'react';
-import Tab from "react-bootstrap/Tab";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Nav from "react-bootstrap/Nav";
+import Tab               from "react-bootstrap/Tab";
+import Tabs              from 'react-bootstrap/Tabs';
+import {ErrorBoundary}   from "react-error-boundary";
+import ErrorFallback     from "../../Components/ErrorFallback";
 import './Bank.css';
-import Wallet from "./Sections/Wallet";
-import {ErrorBoundary} from "react-error-boundary";
-import ErrorFallback from "../../Components/ErrorFallback";
+import Wallet            from "./Sections/Wallet";
 
 const Bank = () => {
     const [activeTab, setActiveTab] = useState<string | undefined>('wallet');
 
     return (
         <div className="vh-100 bankView">
-            <Tab.Container activeKey={activeTab} onSelect={k => setActiveTab(k ?? undefined)}>
-                <Row className="m-0">
-                    <Col sm={2}>
-                        <Nav variant="pills" fill className="flex-column">
-                            <Nav.Item>
-                                <Nav.Link eventKey="wallet">Wallet</Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item>
-                                <Nav.Link eventKey="bank">Bank</Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item>
-                                <Nav.Link eventKey="material">Material Storage</Nav.Link>
-                            </Nav.Item>
-                        </Nav>
-                    </Col>
-                    <Col>
-                        <ErrorBoundary FallbackComponent={ErrorFallback}>
-                            <Tab.Content>
-                                <Tab.Pane eventKey="wallet"><Wallet /></Tab.Pane>
-                                <Tab.Pane eventKey="bank">Bank</Tab.Pane>
-                                <Tab.Pane eventKey="material">Material Storage</Tab.Pane>
-                            </Tab.Content>
-                        </ErrorBoundary>
-                    </Col>
-                </Row>
-            </Tab.Container>
+            <ErrorBoundary FallbackComponent={ErrorFallback}>
+                <Tabs activeKey={activeTab} onSelect={k => setActiveTab(k ?? undefined)} fill>
+                    <Tab eventKey="wallet" title="Wallet">
+                        <div className="mt-3 p-3">
+                            <Wallet />
+                        </div>
+                    </Tab>
+                    <Tab eventKey="bank" title="Bank">
+                        <div className="mt-3 p-3">Bank</div>
+                    </Tab>
+                    <Tab eventKey="material" title="Material Storage">
+                        <div className="mt-3 p-3">Material Storage</div>
+                    </Tab>
+                </Tabs>
+            </ErrorBoundary>
         </div>
     );
 };

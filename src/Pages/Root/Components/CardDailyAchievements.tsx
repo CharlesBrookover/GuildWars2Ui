@@ -4,6 +4,7 @@ import React, {useState}        from 'react';
 import Tab                      from "react-bootstrap/Tab";
 import Tabs                     from "react-bootstrap/Tabs";
 import DataCard                 from "../../../Components/DataCard";
+import FetchingIcon             from '../../../Components/FetchingIcon';
 import LoadingIcon              from '../../../Components/LoadingIcon';
 import useApiQueries            from '../../../Hooks/useApiQueries';
 import {msTillReset}            from '../../../Services/Dates';
@@ -32,7 +33,7 @@ const CardDailyAchievements = ({tomorrow}: DailyAchievementsProps) => {
              ? <LoadingIcon />
              : <DataCard title={`Daily Achievements${tomorrow ? ' (Tomorrow)' : ''}`} error={error?.message}>
                  {isFetching
-                  ? <FontAwesomeIcon icon={solid('cogs')} spin />
+                  ? <FetchingIcon />
                   : <Tabs fill activeKey={activeTab} onSelect={tab => setActiveTab(tab || "")}>
                       <Tab eventKey="pve" title="PvE">
                           {data && data.pve.length > 0 ?
