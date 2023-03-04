@@ -26,9 +26,9 @@ const Sidebar = () => {
                     </Nav.Link>
                 </Nav.Item>
                 <Nav.Item className="text-start">
-                    <Nav.Link as={Link} to={'/bank'}>
+                    <Nav.Link as={Link} to={'/assets'}>
                         <FontAwesomeIcon icon={solid('building-columns')} fixedWidth className="mx-3"/>
-                        <span>Bank</span>
+                        <span>Assets</span>
                     </Nav.Link>
                 </Nav.Item>
                 <Nav.Item className="text-start">

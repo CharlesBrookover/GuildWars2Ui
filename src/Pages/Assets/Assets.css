@@ -1,15 +1,15 @@
-.bankView .nav-pills {
+.assetView .nav-pills {
     --bs-nav-pills-link-active-bg: var(--bs-secondary);
     --bs-nav-pills-link-active-color: var(--bs-white);
 }
 
-.bankView .nav-pills .nav-link:hover {
+.assetView .nav-pills .nav-link:hover {
     --bs-nav-link-hover-color: var(--bs-gray-600);
 }
 
-.bankView .nav-pills .nav-link {
+.assetView .nav-pills .nav-link {
     --bs-nav-link-color: var(--bs-black);
 }
-.bankView .nav-pills .nav-link {
+.assetView .nav-pills .nav-link {
     --bs-nav-link-padding-y: 2rem;
 }

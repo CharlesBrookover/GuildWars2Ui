@@ -1,23 +1,20 @@
 import React                 from 'react';
-import Col                   from "react-bootstrap/Col";
-import Container             from "react-bootstrap/Container";
-import Row                   from "react-bootstrap/Row";
-import CardDailyAchievements from "./Components/CardDailyAchievements";
+import Col                   from 'react-bootstrap/Col';
+import Row                   from 'react-bootstrap/Row';
+import CardDailyAchievements from './Components/CardDailyAchievements';
 
 
-const Root = () => {
+const RootPage = () => {
     return (
-        <Container>
-            <Row>
-                <Col>
-                    <CardDailyAchievements />
-                </Col>
-                <Col>
-                    <CardDailyAchievements tomorrow />
-                </Col>
-            </Row>
-        </Container>
+        <Row className="p-3">
+            <Col>
+                <CardDailyAchievements />
+            </Col>
+            <Col>
+                <CardDailyAchievements tomorrow />
+            </Col>
+        </Row>
     );
 };
 
-export default Root;
+export default RootPage;

@@ -8,6 +8,7 @@ import {Outlet}                                  from "react-router-dom";
 import {userData}                                from '../../_data/userData';
 import AlertMessage                              from "../../Components/AlertMessage";
 import ErrorFallback                             from "../../Components/ErrorFallback";
+import LoadingIcon                               from '../../Components/LoadingIcon';
 import {PageContextProvider, PageContextReducer} from "../../Contexts/PageContext";
 import {PageContextType}                         from '../../Contexts/types';
 import useApiFiles                               from '../../Hooks/useApiFiles';
@@ -42,15 +43,15 @@ const App = ({children}: PropsChildren) => {
             )}>
                 <Container fluid>
                     <Row>
-                        <Col md={2} className="p-0"><Sidebar /></Col>
-                        <Col className="p-0">
+                        <Col md={2} className="px-0"><Sidebar /></Col>
+                        <Col className="px-0">
                             <Stack>
                                 <Header />
                                 <ErrorBoundary FallbackComponent={ErrorFallback}>
                                     {pageLoad
-                                     ? <div>Loading...</div>
+                                     ? <LoadingIcon />
                                      :
-                                     <main className="overflow-auto m-3">
+                                     <main className="p-3">
                                          <Outlet />
                                          {children}
                                      </main>

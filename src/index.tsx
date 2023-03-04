@@ -1,37 +1,37 @@
-import {createSyncStoragePersister}          from "@tanstack/query-sync-storage-persister";
-import {QueryClient}                         from "@tanstack/react-query";
-import {PersistQueryClientProvider}          from "@tanstack/react-query-persist-client";
-import React                                 from "react";
-import ReactDOM                              from "react-dom/client";
+import {createSyncStoragePersister}          from '@tanstack/query-sync-storage-persister';
+import {QueryClient}                         from '@tanstack/react-query';
+import {PersistQueryClientProvider}          from '@tanstack/react-query-persist-client';
+import React                                 from 'react';
+import ReactDOM                              from 'react-dom/client';
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
-import App                                   from "./Pages/Layout/App";
-import "./index.css";
-import Bank                                  from "./Pages/Bank";
-import Database                              from "./Pages/Database";
+import './index.css';
+import AssetsPage                            from './Pages/Assets';
+import Database                              from './Pages/Database';
 import ErrorPage                             from './Pages/ErrorPage';
-import Root                                  from './Pages/Root';
-import Settings                              from "./Pages/Settings"
-import reportWebVitals                       from "./reportWebVitals";
+import App                                   from './Pages/Layout/App';
+import RootPage                              from './Pages/Root';
+import Settings                              from './Pages/Settings';
+import reportWebVitals                       from './reportWebVitals';
 
 const root = ReactDOM.createRoot(
-    document.getElementById("root") as HTMLElement
+    document.getElementById('root') as HTMLElement
 );
 
 const router = createBrowserRouter([
                                        {
                                            path:         '/',
-                                           element:      <App/>,
-                                           errorElement: <ErrorPage/>,
+                                           element:      <App />,
+                                           errorElement: <ErrorPage />,
                                            children:     [
-                                               {index: true, element: <Root/>},
-                                               {path: 'settings', element: <Settings/>},
+                                               {index: true, element: <RootPage />},
+                                               {path: 'assets', element: <AssetsPage />},
+                                               {path: 'settings', element: <Settings />},
                                                {
-                                                   path:     'database', element: <Database/>,
+                                                   path:     'database', element: <Database />,
                                                    children: [
                                                        {path: ':itemid'}
                                                    ]
-                                               },
-                                               {path: 'bank', element: <Bank/>}
+                                               }
                                            ]
                                        }
                                    ]);
@@ -52,7 +52,7 @@ const localstoragePersister = createSyncStoragePersister({
 root.render(
     <React.StrictMode>
         <PersistQueryClientProvider client={queryClient} persistOptions={{persister: localstoragePersister}}>
-            <RouterProvider router={router}/>
+            <RouterProvider router={router} />
         </PersistQueryClientProvider>
     </React.StrictMode>
 );
