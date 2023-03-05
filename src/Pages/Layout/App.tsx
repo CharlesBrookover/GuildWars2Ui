@@ -11,6 +11,7 @@ import ErrorFallback                             from "../../Components/ErrorFal
 import LoadingIcon                               from '../../Components/LoadingIcon';
 import {PageContextProvider, PageContextReducer} from "../../Contexts/PageContext";
 import {PageContextType}                         from '../../Contexts/types';
+import useApiCurrencies                          from '../../Hooks/useApiCurrencies';
 import useApiFiles                               from '../../Hooks/useApiFiles';
 import Header                                    from "./Header";
 import Sidebar                                   from "./Sidebar";
@@ -27,10 +28,11 @@ const App = ({children}: PropsChildren) => {
 
     /* "Prefetch" some data that should populate some context data */
     const {isLoading: apiFilesLoading, coinIcons} = useApiFiles();
+    const {isLoading: apiCurrencyLoading} = useApiCurrencies();
 
     useEffect(() => {
-        setPageLoad(() => apiFilesLoading);
-    }, [apiFilesLoading])
+        setPageLoad(() => [apiFilesLoading, apiCurrencyLoading].every(v => v));
+    }, [apiFilesLoading, apiCurrencyLoading])
 
     useEffect(() => {
         dispatch({type: 'UPDATE_ICONS', icons: coinIcons});

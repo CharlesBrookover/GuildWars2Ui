@@ -3,7 +3,8 @@ import {UserType} from '../_data/userData';
 
 export interface PageContextType {
     user?: UserType,
-    icons?: PageContextIcons
+    icons?: PageContextIcons,
+    currencies?: object
 }
 
 export interface PageContextIcons {
@@ -19,5 +20,6 @@ export interface PageContextProviderProps {
 
 export interface PageContextReducerActions {
     type: string,
-    icons?: PageContextIcons
+    icons?: PageContextIcons,
+    currencies?: object
 }

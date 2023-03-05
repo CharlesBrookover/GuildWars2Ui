@@ -21,6 +21,8 @@ const PageContextReducer = (state: any, action: any) => {
     switch (action.type) {
         case 'UPDATE_ICONS':
             return {...state, icons: {...action.icons}};
+        case 'UPDATE_CURRENCIES':
+            return {...state, currencies: {...action.currencies}};
         default:
             throw new Error('Undefined Action');
     }
