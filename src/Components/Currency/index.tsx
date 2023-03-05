@@ -22,7 +22,7 @@ const Currency = ({value, name}: CurrencyProps) => {
                 return currency ? currency.icon : '';
             })
         }
-    }, [data]);
+    }, [data, name]);
 
     return (
         <>

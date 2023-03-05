@@ -28,11 +28,10 @@ const App = ({children}: PropsChildren) => {
 
     /* "Prefetch" some data that should populate some context data */
     const {isLoading: apiFilesLoading, coinIcons} = useApiFiles();
-    const {isLoading: apiCurrencyLoading} = useApiCurrencies();
 
     useEffect(() => {
-        setPageLoad(() => [apiFilesLoading, apiCurrencyLoading].every(v => v));
-    }, [apiFilesLoading, apiCurrencyLoading])
+        setPageLoad(() => [apiFilesLoading].every(v => v));
+    }, [apiFilesLoading])
 
     useEffect(() => {
         dispatch({type: 'UPDATE_ICONS', icons: coinIcons});

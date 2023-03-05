@@ -3,20 +3,28 @@ import {DurationInMs}        from '../Services/Dates';
 import {ApiCurrencies} from '../Types/Api/Bank';
 import useApiQueries   from './useApiQueries';
 
-const useApiCurrencies = () => {
+export interface ContextData {
+    [key: number]: {
+        name: string,
+        icon: string,
+        description: string
+    }
+}
 
-    const [extraData, setExtraData] = useState<object>({});
+export interface ApiCurrenciesOutput {
+    data: ApiCurrencies[] | undefined,
+    isLoading: boolean,
+    isFetching: boolean
+}
+
+const useApiCurrencies = (): ApiCurrenciesOutput => {
+
 
     const {data, isLoading, isFetching} = useApiQueries<ApiCurrencies[]>(
         {
             endpoint: '/currencies', parameters: {ids: 'all'}, queryConfig: {staleTime: DurationInMs({days: 7}), useErrorBoundary: true}
         });
 
-    useEffect(() => {
-        if (data) {
-            setExtraData({...data});
-        }
-    }, [data]);
 
     return {data, isLoading, isFetching};
 };

@@ -4,7 +4,14 @@ import {DurationInMs}        from '../Services/Dates';
 import {ApiFiles}            from '../Types/Api/Files';
 import useApiQueries         from './useApiQueries';
 
-const useApiFiles = () => {
+export interface ApiFilesOutput {
+    data: ApiFiles[] | undefined,
+    isLoading: boolean,
+    isFetching: boolean,
+    coinIcons:PageContextIcons
+}
+
+const useApiFiles = (): ApiFilesOutput => {
     const [coinIcons, setCoinIcons] = useState<PageContextIcons>({});
 
     const {data, isFetching, isLoading} = useApiQueries<ApiFiles[]>(

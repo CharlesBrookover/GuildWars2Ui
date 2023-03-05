@@ -4,7 +4,6 @@ import {UserType} from '../_data/userData';
 export interface PageContextType {
     user?: UserType,
     icons?: PageContextIcons,
-    currencies?: object
 }
 
 export interface PageContextIcons {
