@@ -17,14 +17,14 @@ const AssetsPage = () => {
         <div className="assetView d-flex flex-column vh-100 px-3 pb-3">
             <ErrorBoundary FallbackComponent={ErrorFallback}>
                 <Tab.Container defaultActiveKey="wallet" onSelect={k => setActiveTab(k ?? undefined)}>
-                    <Row className="g-0">
+                    <Row>
                         <Nav variant="tabs" fill>
                             <Nav.Item><Nav.Link eventKey="wallet">Wallet</Nav.Link></Nav.Item>
                             <Nav.Item><Nav.Link eventKey="bank">Bank</Nav.Link></Nav.Item>
                             <Nav.Item><Nav.Link eventKey="material">Material Storage</Nav.Link></Nav.Item>
                         </Nav>
                     </Row>
-                    <Row className="g-0 flex-grow-1 overflow-auto">
+                    <Row className="flex-grow-1 overflow-auto p-1">
                         <Tab.Content>
                             <Tab.Pane eventKey="wallet"><Wallet /></Tab.Pane>
                             <Tab.Pane eventKey="bank"><Bank /></Tab.Pane>

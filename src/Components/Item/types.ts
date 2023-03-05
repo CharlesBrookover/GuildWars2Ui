@@ -1,5 +1,5 @@
-import {ApiItem} from '../../Types/Api/Item';
+import {ApiBank} from '../../Types/Api/Bank';
 
 export interface ItemProps {
-    item: ApiItem<any>
+    bankSlot: ApiBank;
 }
